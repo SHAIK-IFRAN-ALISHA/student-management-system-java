@@ -8,19 +8,46 @@ class Student {
     int age;
     String course;
 
-    Student(int id, String name, int age, String course) {
+    int mathsMarks;
+    int javaMarks;
+    int dbmsMarks;
+
+    double gpa;
+
+    Student(int id,
+            String name,
+            int age,
+            String course,
+            int mathsMarks,
+            int javaMarks,
+            int dbmsMarks) {
+
         this.id = id;
         this.name = name;
         this.age = age;
         this.course = course;
+
+        this.mathsMarks = mathsMarks;
+        this.javaMarks = javaMarks;
+        this.dbmsMarks = dbmsMarks;
+
+        double average =
+                (mathsMarks + javaMarks + dbmsMarks) / 3.0;
+
+        this.gpa = average / 10.0;
     }
 
     void display() {
+
         System.out.println(
                 "ID: " + id +
                 " | Name: " + name +
                 " | Age: " + age +
-                " | Course: " + course);
+                " | Course: " + course +
+                " | Maths: " + mathsMarks +
+                " | Java: " + javaMarks +
+                " | DBMS: " + dbmsMarks +
+                " | GPA: " + String.format("%.2f", gpa));
     }
 }
 
@@ -63,15 +90,35 @@ public class Main {
                     System.out.print("Enter Course: ");
                     String course = sc.nextLine();
 
-                    students.add(new Student(id, name, age, course));
+                    System.out.print("Enter Maths Marks: ");
+                    int mathsMarks = sc.nextInt();
+
+                    System.out.print("Enter Java Marks: ");
+                    int javaMarks = sc.nextInt();
+
+                    System.out.print("Enter DBMS Marks: ");
+                    int dbmsMarks = sc.nextInt();
+
+                    students.add(
+                            new Student(
+                                    id,
+                                    name,
+                                    age,
+                                    course,
+                                    mathsMarks,
+                                    javaMarks,
+                                    dbmsMarks));
 
                     System.out.println("Student Added Successfully!");
+
                     break;
 
                 case 2:
 
                     if (students.isEmpty()) {
+
                         System.out.println("No Students Found");
+
                     } else {
 
                         for (Student s : students) {
@@ -91,9 +138,12 @@ public class Main {
                     for (Student s : students) {
 
                         if (s.id == searchId) {
+
                             System.out.println("Student Found:");
                             s.display();
+
                             found = true;
+
                             break;
                         }
                     }
@@ -117,7 +167,8 @@ public class Main {
 
                             students.remove(i);
 
-                            System.out.println("Student Deleted Successfully");
+                            System.out.println(
+                                    "Student Deleted Successfully");
 
                             removed = true;
 
@@ -134,6 +185,7 @@ public class Main {
                 case 5:
 
                     System.out.println("Thank You");
+                    sc.close();
                     System.exit(0);
 
                 default:
